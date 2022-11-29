@@ -43,7 +43,7 @@ async function withdraw() {
     await listenForTxMine(txRes);
     console.log("Done!");
   } catch (e) {
-    console.log(e);
+    console.log(dir(e));
   }
 }
 

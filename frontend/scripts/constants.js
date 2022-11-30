@@ -5,8 +5,7 @@ export const signerFundsDetailsMessage =
 
 export const loader = `<img src="./static/icons8-iphone-spinner.gif" class="pb-1" width="30" height="30" />`;
 
-// export const contractAddress = "0x5FD68104b19553e4A16AA93fb3bFE6fa64D8E5BC";
-export const contractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+export const contractAddress = "0x5FD68104b19553e4A16AA93fb3bFE6fa64D8E5BC";
 
 export const abi = [
   {

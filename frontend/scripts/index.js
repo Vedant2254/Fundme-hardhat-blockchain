@@ -18,12 +18,11 @@ const provider = new ethers.providers.Web3Provider(window.ethereum);
 const signer = provider.getSigner();
 const contract = new ethers.Contract(contractAddress, abi, signer);
 
-(async function initialize() {
-  showWalletConnected();
-  await setBtns();
-  document.getElementById(
-    "contract-link"
-  ).href = `https://goerli.etherscan.io/address/${contractAddress}`;
+(function initialize() {
+  setTimeout(async () => {
+    showWalletConnected();
+    await setBtns();
+  }, 500);
 })();
 
 async function setBtns() {
@@ -31,7 +30,7 @@ async function setBtns() {
   fundBtn.disabled =
     withdrawBtn.disabled =
     getSignerFundsBtn.disabled =
-      !isWalletConnected();
+      !(window.ethereum._state.accounts.length != 0);
 }
 
 async function isNotOwner() {
@@ -40,10 +39,6 @@ async function isNotOwner() {
     const signerAddress = await signer.getAddress();
     return ownerAddress != signerAddress;
   } catch (e) {}
-}
-
-function isWalletConnected() {
-  return window.ethereum._state.accounts.length != 0;
 }
 
 function showWalletConnected() {

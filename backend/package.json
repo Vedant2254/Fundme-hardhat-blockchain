@@ -1,5 +1,5 @@
 {
-  "name": "hardhat-fundme",
+  "name": "fundme-hardhat-blockchain",
   "author": "Vedant Patil",
   "devDependencies": {
     "@chainlink/contracts": "^0.5.1",

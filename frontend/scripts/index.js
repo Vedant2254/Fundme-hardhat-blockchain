@@ -20,15 +20,19 @@ const contract = new ethers.Contract(contractAddress, abi, signer);
 
 (async function initialize() {
   showWalletConnected();
+  await setBtns();
+  document.getElementById(
+    "contract-link"
+  ).href = `https://goerli.etherscan.io/address/${contractAddress}`;
+})();
+
+async function setBtns() {
   withdrawBtn.disabled = await isNotOwner();
   fundBtn.disabled =
     withdrawBtn.disabled =
     getSignerFundsBtn.disabled =
       !isWalletConnected();
-  document.getElementById(
-    "contract-link"
-  ).href = `https://goerli.etherscan.io/address/${contractAddress}`;
-})();
+}
 
 async function isNotOwner() {
   try {
@@ -63,6 +67,7 @@ async function connect() {
     if (window.ethereum) {
       await window.ethereum.request({ method: "eth_requestAccounts" });
       showWalletConnected();
+      await setBtns();
     } else {
       connDetails.innerText = "No Metamask installed!";
       connDetails.classList.remove("text-success");

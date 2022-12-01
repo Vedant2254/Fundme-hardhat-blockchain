@@ -4,27 +4,23 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <img src="readme-data/logo.png" alt="Logo" width="90" height="90">
 
-  <h3 align="center">FundMe - demo decentralized crowdfunding</h3>
+  <h3 align="center">FundMe - demo decentralized crowdfunding application</h3>
 
   <p align="center">
-    A minimal crowdfuding web application that run on a decentralized server, ethereum blockchain
+    A minimal crowdfuding dApp that runs on a decentralized server, <a href="https://ethereum.org/en/">ethereum blockchain</a>
     <br />
     <a href="https://github.com/Vedant2254/Fundme-hardhat-blockchain"><strong>Explore the source code »</strong></a>
     <br />
     <br />
-    <a href="https://vedant2254.github.io/Fundme-hardhat-blockchain/frontend/fundme.html">View Demo</a>
+    <a href="https://vedant2254.github.io/Fundme-hardhat-blockchain/frontend/fundme.html">Live dapp</a>
     ·
     <a href="https://github.com/Vedant2254/Fundme-hardhat-blockchain/issues">Report Issue</a>
-    ·
-    <a href="https://github.com/Vedant2254/Fundme-hardhat-blockchain/issues">Request Feature</a>
-  </p>
 </div>
 
 <!-- TABLE OF CONTENTS -->
@@ -45,6 +41,8 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#some-backend-usage-examples">Some backend usage examples</a></li>
+    <li><a href="#folder-structure">Folder Structure</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
@@ -55,9 +53,11 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://vedant2254.github.io/Fundme-hardhat-blockchain/frontend/fundme.html)
 
-FundMe is a demo crowdfunding [dApp](https://ethereum.org/en/developers/docs/dapps/) that uses a decentralized server as a backend, rather than a centralized server making the system more robust by introducing advantages like zero-downtime, complete data integrity and trustless computation/verifiable behavior. The server is operated by a Solidity smart contract deployed on Ethereum blockchain, smart contracts are accessible and transparent like an open APIs. HTML, CSS and Javascript are used to create a minimal frontend to assist user interaction with smart contracts on blockchain and send transactions.
+FundMe is a demo crowdfunding [dApp](https://ethereum.org/en/developers/docs/dapps/) that uses a decentralized server as a backend, rather than a centralized server making the system more robust by introducing advantages like zero-downtime, complete data integrity and trustless computation/verifiable behavior.
 
-This project is a part of learning from the blockchain development course by [freeCodeCamp](https://www.freecodecamp.org/) on their Youtube channel [freeCodeCamp.org](https://youtu.be/gyMwXuJrbJQ).
+The server is operated by a Solidity smart contract deployed on Ethereum blockchain. Smart contracts are accessible and transparent like open APIs, so anyone can build a frontend on top of these smart contracts. View FundMe smart contract [here](https://goerli.etherscan.io/address/0x5FD68104b19553e4A16AA93fb3bFE6fa64D8E5BC). HTML, CSS (boostrap) and Javascript are used to create a minimal frontend to assist user interaction with smart contracts on blockchain and send transactions.
+
+This project is a part of learning from the blockchain development course on youtube [freeCodeCamp.org](https://youtu.be/gyMwXuJrbJQ) by [freeCodeCamp](https://www.freecodecamp.org/).
 
 See <a href="#getting-started">Getting Started</a> section to install the project locally.
 
@@ -142,13 +142,57 @@ running the above command should print the installed version of npm. This verifi
 
    - Start by creating a new file named `.env`
 
-1. Project is now installed, head to <a href="#usage">Usage</a> section to learn about using it.
+1. Now, first we need to deploy the smart contracts on blockchain then let the frontend know about the contract address, so that it can send transaction requests. _npm users, replace `yarn` with `npx` in below commands_
+
+   - Deploying on local hardhat blockchain -
+     - Start the hardhat local blockchain on https://127.0.0.1:8545 using below command
+       ```
+       yarn hardhat node
+       ```
+       Keep this blockchain running when interacting with application. Hardhat automatically deploys the smart contracts for you. You don't need to explicitly deploy them.
+   - Deploying on Goerli testnet -
+     - Before heading over to this part, make sure you have properly setup `.env` file, as it contains the RPC url and the private key of deployer.
+     - Another thing we need to do is to use the [Goerli Faucet](https://goerlifaucet.com/) to request some Goerli ETH for our account as we need to spend some ETH to deploy the contract. For this you need to be logged in to your [Alchemy](https://dashboard.alchemy.com/) account.
+     - Enter the public address of your wallet (present in MetaMask extension) and click on `Send Me ETH`. A transaction will be performed and soon your account will be credited with some Goerli ETH (note that this is not real Ether currency, a fake Ether currency on testnet).
+     - Run below command to deploy on goerli testnet
+       ```
+       yarn hardhat deploy --network goerli
+       ```
+   - Telling the smart contract address to frontend -
+     - Go to `backend/deployments/`, then go to `localhost` folder if deployed on localhost or `goerli` folder if deployed on goerli testnet. Copy the value of `address` field in `FundMe.json` file in this folder.
+     - Paste the copied address at
+     ```js
+     export const contractAddress = "CONTRACT-ADDRESS-GOES-HERE";
+     ```
+     in `frontend/scripts/constants.js`.
+
+1. Lastly, we need to install [live-server](https://www.npmjs.com/package/live-server/v/0.8.0) npm package globally to server the frontend. Just run -
+
+   ```
+   npm install live-server -g
+   ```
+
+   If you are on linux, you may need to add `sudo` at the start of command.
+
+1. Project is now installed, run command `live-server` from root directory of project and visit https://127.0.0.1:8080
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
 
 ## Usage
+
+- **Connecting to MetaMask wallet -** To connect to the wallet click on `Connect ot MetaMask account` button. MetaMask will pop-up to confirm. Select the accounts you want to connect and click on connect.
+
+- **Funding to the contract -** Enter the amount of ETH you want to fund and click on fund. _Note that the contract will make a transaction only if ETH amount is greater than is 50 USD (nearly 0.04 ETH)_
+
+- **Withdraw funds from contract -** Use the `Withdraw` button to withdraw the funds. Transactions will succeed iff you are logged in to MetaMask using the account you have deployed the smart contract.
+
+- **Get Contract Balance -** Use `Get Contract Balance` button to view the balance of contract.
+
+- **View your funds -** `View your funds` shows the amount of funds you have funded to the contract. This resets to 0.0 ETH when the funds are withdrawn from the contract.
+
+## Some backend usage examples
 
 _Note for npm users, replace `yarn` in commands with `npx`_
 
@@ -168,7 +212,7 @@ The section summarizes some examples of operations that could be performed on th
   yarn hardhat deploy --network goerli
   ```
 
-- **Interacting with smart contracts through CLI -** `scripts` folder contains the basic `fund` and `withdraw` scripts used for making transactions on blockchain. You can run the scripts using following commands. You can write your own scripts in `scripts/` folder.
+- **Interacting with smart contracts through CLI -** `scripts` folder contains the basic `fund` and `withdraw` scripts used for making transactions on blockchain. You can run the scripts using following commands. You can also write your own scripts in `scripts/` folder.
 
   - fund.js
 
@@ -188,11 +232,96 @@ The section summarizes some examples of operations that could be performed on th
   yarn hardhat test
   ```
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+See [Folder Structure](#folder-structure) to do your experimentation.
+
+## Folder Structure
+
+There is more stuff than above examples that you can do with frontend and backend if you have installed locally. Here's a brief of folders so that you can try out your own experiments -
+
+<ul>
+  <details>
+    <summary><code>frontend/</code></summary>
+    <ul>
+      <li><code>scripts/</code> contains the scripts of frontend</li>
+      <li><code>static/</code> contains static content like images</li>
+      <li><code>fundme.html</code> is the main HTML file</li>
+    </ul>
+  </details>
+  <details>
+    <summary><code>backend/</code></summary>
+    <ul>
+      <details>
+        <summary><code>contracts/</code> contains all the contracts code written in <a href="">solidity</a></summary>
+        <ul><li><code>test/</code> folder contains the mock contracts (See <a href="./backend/Steps.md) to know about mock contracts">Steps.md</a>, that needs to be deployed on local blockchains only.</li></ul>
+      </details>
+      <details>
+        <summary><code>deploy/</code> folder consists of the scripts used for deploying to smart contracts on local as well as testnet blockchains</summary>
+        <ul>
+          <li><code>unit/</code> consists of unit test, for local testing</li>
+          <li><code>staging/</code> consists of staging test, for testnet testing</li>
+        </ul>
+      </details>
+      <details>
+        <summary><code>deployments/</code> keeps the record of recent deployments on different networks. The folder is automatically created by <code>hardhat-deploy</code> package when we deploy using <code>yarn hardhat deploy</code></summary>
+        <ul>
+          <li><code>goerli/</code> contains deployment details of goerli testnet</li>
+          <li><code>localhost/</code> contains deployment details of local hardhat blockchan</li>
+        </ul>
+      </details>
+      <details>
+        <summary><code>scripts/</code> this folder contains the scripts that can be run using <code>yarn hardhat run</code></summary>
+        <ul>
+          <li><code>fundme.js</code> script for funding to contract</li>
+          <li><code>withdraw.js</code> script for withdrawing funds from contract</li>
+        </ul>
+      </details>
+      <details>
+        <summary><code>test/</code> contains the test scipts for testing the contract</summary>
+        <ul>
+          <li><code>unit/</code> test performed on local blockchain</li>
+          <li><code>staging/</code> test performed on testnet</li>
+        </ul>
+      </details>
+      <details>
+        <summary><code>utils/</code> utility scripts used in different scenarios, these are imported wherever required.</summary>
+        <ul>
+          <li><code>verify.js</code> it verifies the contract programatically on <a href="https://etherscan.io/">Etherscan</a></li>
+        </ul>
+      </details>
+      <details>
+        <summary><code>hardhat.config.js</code> used for configuring hardhat</summary>
+        <ul>
+          <li><code>solidity:</code> solidity compiler version is specified here</li>
+          <li><code>defaultNetwork:</code> anytime we run hardhat command, by default it runs on this network</li>
+          <li><code>networks:</code> different network configurations are specified here</li>
+          <li><code>namedAccounts:</code> accounts used for deploying and performing transactions are specified here. The numbers denote the index of private key in <code>accounts</code> array we specified above when configuring <code>networks</code></li>
+          <li><code>etherscan:</code> etherscan apiKey, used for verifying the contract on <a href="https://etherscan.io/">Etherscan</a>.</li>
+          <li><code>gasReporter:</code> configuration for gas reporter, it shows the gas usage for each transaction when we run <code>yarn hardhat test</code></li>
+        </ul>
+      </details>
+      <details>
+        <summary><code>helper-hardhat-config.js</code> is a helper config that is imported in deployment scripts, it exports the following</summary>
+        <ul>
+          <li>
+            <code>networkConfig</code> is a mapping of chainId to the address of contract that gives the price conversion from ETH to USD. This address is passed to smart contract which is used by <code>AggregatorV3Interface</code> in smart contract to give the required price conversions.
+          </li>
+          <li>
+            <code>developmentChains</code> is an array of names of networks that run locally. We need these as in deployment scripts we need to decide if we need to deploy the mock contracts.
+          </li>
+        </ul>
+      </details>
+      Other files <code>package.json</code>, <code>yarn.lock</code>, are config files of yarn or npm. You search google to learn more about them.
+    </ul>
+  </details>
+  <code>index.html</code> is just for redirecting to <code>frontend/fundme.html</code> as GitHub pages search for <code>index.html</code> in root directory of project.
+</ul>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Contact
+
+<a href="mailto:pvedant2002@gmail.com"><img src="https://img.icons8.com/color/30/null/gmail--v1.png"/></a>
+<a href="https://www.linkedin.com/in/vedant-patil-7500ba221"><img src="https://img.icons8.com/color/30/null/linkedin-circled--v1.png"/></a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -206,9 +335,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 [stars-shield]: https://img.shields.io/github/stars/Vedant2254/Fundme-hardhat-blockchain?style=for-the-badge
 [stars-url]: https://github.com/Vedant2254/Fundme-hardhat-blockchain/stargazers
 [issues-shield]: https://img.shields.io/github/issues/Vedant2254/Fundme-hardhat-blockchain?style=for-the-badge
-[issues-url]: https://github.com/Vedant2254/Fundme-hardhat-blockchain/issues
-[license-shield]: https://img.shields.io/github/license/Vedant2254/Fundme-hardhat-blockchain?style=for-the-badge
-[license-url]: https://github.com/Vedant2254/Fundme-hardhat-blockchain/blob/master/LICENSE.txt
+[issues-url]: https://github.com/Vedant2254/Fundme-hardhat-blockchain/issuesFundme-hardhat-blockchain/blob/master/LICENSE.txt
 [product-screenshot]: ./readme-data/screenshot.png
 [html]: https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white
 [html-url]: https://developer.mozilla.org/en-US/docs/Web/HTML

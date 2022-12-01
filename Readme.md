@@ -310,7 +310,7 @@ There is more stuff than above examples that you can do with frontend and backen
           </li>
         </ul>
       </details>
-      Other files <code>package.json</code>, <code>yarn.lock</code>, are config files of yarn or npm. You search google to learn more about them.
+      Other files <code>package.json</code>, <code>yarn.lock</code>, are config files of yarn or npm. You can search to learn more about them.
     </ul>
   </details>
   <code>index.html</code> is just for redirecting to <code>frontend/fundme.html</code> as GitHub pages search for <code>index.html</code> in root directory of project.

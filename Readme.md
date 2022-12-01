@@ -182,15 +182,17 @@ running the above command should print the installed version of npm. This verifi
 
 ## Usage
 
+_To use the website you need to install MetaMask in your browser. See first point of <a href="#installation">Installation</a>_
+
 - **Connecting to MetaMask wallet -** To connect to the wallet click on `Connect ot MetaMask account` button. MetaMask will pop-up to confirm. Select the accounts you want to connect and click on connect.
 
 - **Funding to the contract -** Enter the amount of ETH you want to fund and click on fund. _Note that the contract will make a transaction only if ETH amount is greater than is 50 USD (nearly 0.04 ETH)_
 
-- **Withdraw funds from contract -** Use the `Withdraw` button to withdraw the funds. Transactions will succeed iff you are logged in to MetaMask using the account you have deployed the smart contract.
+- **Withdraw funds from contract -** Use the `Withdraw` button to withdraw the funds. Transaction will succeed iff the selected MetaMask account is also the account that deployed the contract. If you view the website that I have hosted, then you won't be able to use withdraw.
 
 - **Get Contract Balance -** Use `Get Contract Balance` button to view the balance of contract.
 
-- **View your funds -** `View your funds` shows the amount of funds you have funded to the contract. This resets to 0.0 ETH when the funds are withdrawn from the contract.
+- **View your funds -** `View your funds` shows the amount of funds you have funded to the contract. This resets to 0.0 ETH when the funds are withdrawn from the contract by contract owner.
 
 ## Some backend usage examples
 
@@ -252,7 +254,7 @@ There is more stuff than above examples that you can do with frontend and backen
     <ul>
       <details>
         <summary><code>contracts/</code> contains all the contracts code written in <a href="">solidity</a></summary>
-        <ul><li><code>test/</code> folder contains the mock contracts (See <a href="./backend/Steps.md) to know about mock contracts">Steps.md</a>, that needs to be deployed on local blockchains only.</li></ul>
+        <ul><li><code>test/</code> folder contains the mock contracts (See <a href="./backend/Steps.md">Steps.md</a> to know about mock contracts), that needs to be deployed on local blockchains only.</li></ul>
       </details>
       <details>
         <summary><code>deploy/</code> folder consists of the scripts used for deploying to smart contracts on local as well as testnet blockchains</summary>

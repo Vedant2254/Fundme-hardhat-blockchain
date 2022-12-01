@@ -18,6 +18,7 @@ withdrawBtn.onclick = withdraw;
 getBalanceBtn.onclick = getBalance;
 getSignerFundsBtn.onclick = signerFunds;
 
+const ethInput = document.getElementById("eth-amt");
 const contractLink = document.getElementById("contract-link");
 const balanceDetails = document.getElementById("balance-details");
 const signerFundsDetails = document.getElementById("signer-funds-details");
@@ -30,8 +31,8 @@ function initialize(set) {
   set &&
     setTimeout(async () => {
       setConnDetails();
-      await setBtns();
       await setGlobals();
+      await setBtns();
     }, 500);
   contractLink.href = `https://goerli.etherscan.io/address/${contractAddress}`;
   balanceDetails.innerText = balanceDetailsMessage;
@@ -62,11 +63,11 @@ function setConnDetails() {
 }
 
 async function setBtns() {
-  withdrawBtn.disabled = await isNotOwner();
-  fundBtn.disabled =
-    withdrawBtn.disabled =
+  ethInput.disabled =
+    fundBtn.disabled =
     getSignerFundsBtn.disabled =
       !(window.ethereum && window.ethereum._state.accounts.length != 0);
+  withdrawBtn.disabled = fundBtn.disabled || (await isNotOwner());
 }
 
 async function setGlobals() {
@@ -82,7 +83,9 @@ async function isNotOwner() {
     const ownerAddress = await contract.getOwner();
     const signerAddress = await signer.getAddress();
     return ownerAddress != signerAddress;
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 async function connect() {
@@ -99,7 +102,7 @@ async function fund(ethAmount) {
   console.log(`Funding...`);
   const fundTxDetails = document.getElementById("fund-tx-details");
   fundTxDetails.classList.remove("text-danger");
-  ethAmount = document.getElementById("eth-amt").value;
+  ethAmount = ethInput.value;
 
   try {
     fundTxDetails.innerText = "Waiting for confirmation...";
@@ -110,9 +113,11 @@ async function fund(ethAmount) {
     initialize(false);
     console.log("Done!");
   } catch (e) {
-    fundTxDetails.innerText = "Some error occured!";
+    let emsg = e.error ? e.error : e;
+    emsg = emsg.message || "Some error occured!";
+    fundTxDetails.innerText = `${emsg}`;
     fundTxDetails.classList.add("text-danger");
-    console.log(e);
+    console.log(e.message);
   }
 }
 
@@ -132,8 +137,10 @@ async function withdraw() {
     initialize(false);
     console.log("Done!");
   } catch (e) {
+    let emsg = e.error ? e.error : e;
+    emsg = emsg.message || "Some error occured!";
+    withdrawTxDetails.innerText = `${emsg}`;
     withdrawTxDetails.classList.add("text-danger");
-    withdrawTxDetails.innerText = "Some error occured!";
     console.log(e);
   }
 }
@@ -142,7 +149,9 @@ async function getBalance() {
   try {
     const balance = await provider.getBalance(contractAddress);
     balanceDetails.innerHTML = `${ethers.utils.formatEther(balance)} ETH`;
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 async function signerFunds() {
@@ -152,7 +161,9 @@ async function signerFunds() {
     signerFundsDetails.innerHTML = `${ethers.utils.formatEther(
       signerFunds
     )} ETH`;
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 function listenForTxMine(txRes, element) {

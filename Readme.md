@@ -100,7 +100,7 @@ running the above command should print the installed version of npm. This verifi
 1. I have used yarn package manager while developing the project, you can use npm or run below commands to install yarn on you system.
 
    ```sh
-   npm i -g coorepack
+   npm i -g corepack
    corepack enable
    ```
 

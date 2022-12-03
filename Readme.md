@@ -43,6 +43,7 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#some-backend-usage-examples">Some backend usage examples</a></li>
     <li><a href="#folder-structure">Folder Structure</a></li>
+    <li><a href="#acknowledgements">Acknowledgements</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
@@ -56,8 +57,6 @@
 FundMe is a demo crowdfunding [dApp](https://ethereum.org/en/developers/docs/dapps/) that uses a decentralized server as a backend, rather than a centralized server making the system more robust by introducing advantages like zero-downtime, complete data integrity and trustless computation/verifiable behavior.
 
 The server is operated by a Solidity smart contract deployed on Ethereum blockchain. Smart contracts are accessible and transparent like open APIs, so anyone can build a frontend on top of these smart contracts. View FundMe smart contract [here](https://goerli.etherscan.io/address/0x5FD68104b19553e4A16AA93fb3bFE6fa64D8E5BC). HTML, CSS (boostrap) and Javascript are used to create a minimal frontend to assist user interaction with smart contracts on blockchain and send transactions.
-
-This project is a part of learning from the blockchain development course on youtube [freeCodeCamp.org](https://youtu.be/gyMwXuJrbJQ) by [freeCodeCamp](https://www.freecodecamp.org/).
 
 See <a href="#getting-started">Getting Started</a> section to install the project locally.
 
@@ -91,8 +90,13 @@ running the above command should print the installed version of npm. This verifi
 ### Installation
 
 1. Let's start by setting up MetaMask in browser.
+
    - Download and add [MetaMask](https://metamask.io/download/) extension to your desired browser.
    - Click on the extension and follow the instructions properly to create a new wallet or to import an existing wallet.
+
+1. Getting free Goerli ETH
+   - Another thing we need to do is to use the [Goerli Faucet](https://goerlifaucet.com/) to request some Goerli ETH for our account. For this you need to signup at [Alchemy](https://dashboard.alchemy.com/). _Alchemy is a blockchain scaling platform that allows developers to securely create, test, and monitor their decentralized apps (DApps). In simple words it's simply a node that helps you connect to a blockchain._
+   - After you have signed up and logged into your Alchemy account, visit [Goerli Faucet](https://goerlifaucet.com/), enter the public address of your wallet (present in MetaMask extension) and click on `Send Me ETH`. A transaction will be performed and soon your account will be credited with some Goerli ETH (note that this is not real Ether currency, a fake Ether currency on testnet).
 1. Clone the repo
    ```sh
    git clone "https://github.com/Vedant2254/Fundme-hardhat-blockchain"
@@ -122,7 +126,7 @@ running the above command should print the installed version of npm. This verifi
 1. Getting RPC url, Wallet private key and required API keys.
 
    - **RPC url (Goerli testnet)-**
-     - Signup at [Alchemy](https://dashboard.alchemy.com/). Alchemy is a blockchain scaling platform that allows developers to securely create, test, and monitor their decentralized apps (DApps).
+     - Signup or login at [Alchemy](https://dashboard.alchemy.com/).
      - After signup is completed goto your account [dashboard](https://dashboard.alchemy.com/) - click on `+ CREATE APP` button - fill in the name and description asper your choice - select CHAIN as **Ethereum** and NETWORK as **Goerli**.
      - Once the app is created you could see it in your dashboard. Click on `VIEW KEY` and copy the `HTTPS` link. Place it in the `.env` file as shown below
      ```
@@ -151,9 +155,7 @@ running the above command should print the installed version of npm. This verifi
        ```
        Keep this blockchain running when interacting with application. Hardhat automatically deploys the smart contracts for you. You don't need to explicitly deploy them.
    - Deploying on Goerli testnet -
-     - Before heading over to this part, make sure you have properly setup `.env` file, as it contains the RPC url and the private key of deployer.
-     - Another thing we need to do is to use the [Goerli Faucet](https://goerlifaucet.com/) to request some Goerli ETH for our account as we need to spend some ETH to deploy the contract. For this you need to be logged in to your [Alchemy](https://dashboard.alchemy.com/) account.
-     - Enter the public address of your wallet (present in MetaMask extension) and click on `Send Me ETH`. A transaction will be performed and soon your account will be credited with some Goerli ETH (note that this is not real Ether currency, a fake Ether currency on testnet).
+     - Before heading over to this part, make sure you have properly setup `.env` file, as it contains the RPC url and the private key of deployer. Also, check if your account has some ETH balance because we have to spend some ETH to deploy the contract. If you don't have ETH see the 2nd point in [Installation](#installation).
      - Run below command to deploy on goerli testnet
        ```
        yarn hardhat deploy --network goerli
@@ -182,7 +184,9 @@ running the above command should print the installed version of npm. This verifi
 
 ## Usage
 
-_To use the website you need to install MetaMask in your browser. See first point of <a href="#installation">Installation</a>_
+_To use the website you need to install MetaMask in your browser. See 1st point in [Installation](#installation)_
+
+_Also, if you want to fund the contract, you need some ETH in your wallet, see 2nd point in [Installation](#installation)_
 
 - **Connecting to MetaMask wallet -** To connect to the wallet click on `Connect ot MetaMask account` button. MetaMask will pop-up to confirm. Select the accounts you want to connect and click on connect.
 
@@ -319,6 +323,12 @@ There is more stuff than above examples that you can do with frontend and backen
 </ul>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Acknowledgements
+
+This project is a part of learning from the [blockchain development course](https://youtu.be/gyMwXuJrbJQ) provided by [freeCodeCamp](https://www.youtube.com/@freecodecamp), taught by [PatrickCollins](https://www.youtube.com/c/PatrickCollins).
+
+I would like to thank [FreeCodeCamp](https://www.freecodecamp.org/) and [PatrickCollins](https://github.com/PatrickAlphaC) for providing such a comprehensive blockchain development course for free.
 
 ## Contact
 

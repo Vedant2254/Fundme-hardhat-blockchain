@@ -330,6 +330,10 @@ This project is a part of learning from the [blockchain development course](http
 
 I would like to thank [FreeCodeCamp](https://www.freecodecamp.org/) and [PatrickCollins](https://github.com/PatrickAlphaC) for providing such a comprehensive blockchain development course for free.
 
+## Issues
+
+1. Only works on Goerli testnet for now. Will be soon made workable on other testnets.
+
 ## Contact
 
 <a href="mailto:pvedant2002@gmail.com"><img src="https://img.icons8.com/color/30/null/gmail--v1.png"/></a>
